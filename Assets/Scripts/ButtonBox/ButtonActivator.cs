@@ -2,30 +2,19 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class DoorController : MonoBehaviour,IItems
+public class ButtonActivator : MonoBehaviour, IItems
 {
     [SerializeField] private IItems.Items _items;
     private Animator _animator;
-    private bool _doorOpen = false;
 
     private void Awake()
     {
         _animator = gameObject.GetComponent<Animator>();
     }
 
-    private void PlayAnimation() 
-    {
-        if (!_doorOpen)
-        {
-            _animator.SetTrigger("Open");
-            _doorOpen = true;
-        }
-        else
-        {
-
-            _animator.SetTrigger("Close");
-            _doorOpen = false;
-        }
+    private void PlayAnimation()
+    {       
+            _animator.SetTrigger("SetBox");
     }
 
     public void UseItem()

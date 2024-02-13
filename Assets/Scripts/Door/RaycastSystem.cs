@@ -25,10 +25,22 @@ public class RaycastSystem : MonoBehaviour
             if (hit.transform.TryGetComponent(out DoorController door))
             {
                 TryChangeCrosshair();
-
-                if (Input.GetKeyDown(_interactKey))
+                if (Hand.Instance.TackedObject() != null)
                 {
-                    door.PlayAnimation();
+                    if (Input.GetKeyDown(_interactKey))
+                    {
+                        door.UseItem();
+                    }
+                }
+            }else if (hit.transform.TryGetComponent(out ButtonActivator button))
+            {
+                TryChangeCrosshair();
+                if (Hand.Instance.TackedObject() != null)
+                {
+                    if (Input.GetKeyDown(_interactKey))
+                    {
+                        button.UseItem();
+                    }
                 }
             }
             else if (hit.transform.TryGetComponent(out PuzzleController puzzle))
@@ -38,6 +50,23 @@ public class RaycastSystem : MonoBehaviour
                 if (Input.GetKeyDown(_interactKey))
                 {
                     PuzzleController.Instance.ActivatePuzzle();
+                }
+            }
+            else if (hit.transform.TryGetComponent(out TackableObject tackableObject))
+            {
+                TryChangeCrosshair();
+
+                if (Input.GetKeyDown(_interactKey))
+                {
+                    if (Hand.Instance.TryTakeItem())
+                    {
+                        Hand.Instance.ReturnItem();
+                    }
+                    else
+                    {
+                        Hand.Instance.TakeItem(tackableObject);
+                        tackableObject.gameObject.SetActive(false);
+                    }
                 }
             }
 
