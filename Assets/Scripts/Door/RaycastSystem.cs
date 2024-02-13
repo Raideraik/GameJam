@@ -42,6 +42,15 @@ public class RaycastSystem : MonoBehaviour
                         button.UseItem();
                     }
                 }
+            }else if (hit.transform.TryGetComponent(out TableController table))
+            {
+                TryChangeCrosshair();
+               
+                    if (Input.GetKeyDown(_interactKey))
+                    {
+                        table.PlayAnimation();
+                    }
+                
             }
             else if (hit.transform.TryGetComponent(out PuzzleController puzzle))
             {

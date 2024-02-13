@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+[RequireComponent(typeof(Animator))]
 public class ButtonActivator : MonoBehaviour, IItems
 {
     [SerializeField] private IItems.Items _items;
