@@ -9,13 +9,12 @@ public class PortalTeleporter : MonoBehaviour
 
     private bool _playerIsOverlapping = false;
 
-    private void Update()
+    private void LateUpdate()
     {
         if (_playerIsOverlapping)
         {
             Vector3 portalToPlayer = _player.position - transform.position;
             float dotProduct = Vector3.Dot(transform.up, portalToPlayer);
-
             //if true player moved across portal
             if (dotProduct < 0f)
             {
@@ -34,14 +33,22 @@ public class PortalTeleporter : MonoBehaviour
 
     private void OnTriggerEnter(Collider other)
     {
-        if (other.TryGetComponent(out PlayerCam player))
+        if (other.TryGetComponent(out PlayerMovement player))
+        {
+            _playerIsOverlapping = true;
+        }
+    }
+
+    private void OnTriggerStay(Collider other)
+    {
+        if (other.TryGetComponent(out PlayerMovement player))
         {
             _playerIsOverlapping = true;
         }
     }
     private void OnTriggerExit(Collider other)
     {
-        if (other.TryGetComponent(out PlayerCam player))
+        if (other.TryGetComponent(out PlayerMovement player))
         {
             _playerIsOverlapping = false;
         }
