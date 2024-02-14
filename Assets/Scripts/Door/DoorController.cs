@@ -2,33 +2,28 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class DoorController : MonoBehaviour,IItems
+public class DoorController : InteractableObject, IItems
 {
+    [SerializeField] private GameObject[] _portals;
+
     [SerializeField] private IItems.Items _items;
     private Animator _animator;
-    private bool _doorOpen = false;
 
     private void Awake()
     {
         _animator = gameObject.GetComponent<Animator>();
     }
 
-    private void PlayAnimation() 
+    private void PlayAnimation()
     {
-        if (!_doorOpen)
+        _animator.SetTrigger("Open");
+        for (int i = 0; i < _portals.Length; i++)
         {
-            _animator.SetTrigger("Open");
-            _doorOpen = true;
+            _portals[i].SetActive(true);
         }
-        else
-        {
 
-            _animator.SetTrigger("Close");
-            _doorOpen = false;
-        }
     }
-
-    public void UseItem()
+    public override void UseItem()
     {
         if (Hand.Instance.TackedObject().ItemType == _items)
         {

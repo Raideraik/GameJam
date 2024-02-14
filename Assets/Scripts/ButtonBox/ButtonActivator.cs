@@ -6,6 +6,7 @@ using UnityEngine;
 public class ButtonActivator : MonoBehaviour, IItems
 {
     [SerializeField] private IItems.Items _items;
+    [SerializeField] private PortalController _portalController;
     private Animator _animator;
 
     private void Awake()
@@ -22,6 +23,7 @@ public class ButtonActivator : MonoBehaviour, IItems
     {
         if (Hand.Instance.TackedObject().ItemType == _items)
         {
+            _portalController.ActivatePortal();
             Hand.Instance.DestroyItem();
             PlayAnimation();
         }
