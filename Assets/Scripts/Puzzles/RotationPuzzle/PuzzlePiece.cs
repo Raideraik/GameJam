@@ -11,15 +11,13 @@ public class PuzzlePiece : MonoBehaviour, IPointerClickHandler
 
     private void Start()
     {
-        _tempTransform = transform.rotation.z;
+        _tempTransform = transform.eulerAngles.z;
     }
 
     public void OnPointerClick(PointerEventData eventData)
     {
         _tempTransform += 90f;
 
-
-        Debug.Log(_tempTransform);
         transform.DORotate(new Vector3(transform.rotation.x, transform.rotation.y, _tempTransform), 1f);
         //transform.rotation = Quaternion.Euler(0, 0, transform.rotation.z + 90f);
     }

@@ -14,17 +14,21 @@ public class PuzzleController : MonoBehaviour
         Instance = this;
     }
 
-    public void ActivatePuzzle() 
+    public void ActivatePuzzle()
     {
         OnPuzzleActivation?.Invoke(this, EventArgs.Empty);
         Cursor.lockState = CursorLockMode.Confined;
         Cursor.visible = true;
+        PlayerCam.Instance.ToggleCam();
+        PlayerMovement.Instance.ToggleMovement();
     }
-    public void DeActivatePuzzle() 
+    public void DeActivatePuzzle()
     {
         OnPuzzleDeActivation?.Invoke(this, EventArgs.Empty);
         Cursor.lockState = CursorLockMode.Locked;
         Cursor.visible = false;
+        PlayerCam.Instance.ToggleCam();
+        PlayerMovement.Instance.ToggleMovement();
     }
 
 }

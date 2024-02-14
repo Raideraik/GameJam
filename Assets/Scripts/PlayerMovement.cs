@@ -4,6 +4,8 @@ using UnityEngine;
 
 public class PlayerMovement : MonoBehaviour
 {
+    public static PlayerMovement Instance;
+
     [Header("Movement")]
     [SerializeField] private float _moveSpeed;
     [SerializeField] private float _groundDrag;
@@ -30,9 +32,13 @@ public class PlayerMovement : MonoBehaviour
     [SerializeField] private LayerMask _whatIsGround;
     private bool _grounded;
 
+    public bool CanMove => _canMove;
+    private bool _canMove = true;
 
     private void Start()
     {
+        Instance = this;
+
         _rigidbody = GetComponent<Rigidbody>();
         _rigidbody.freezeRotation = true;
     }
@@ -51,7 +57,8 @@ public class PlayerMovement : MonoBehaviour
 
     private void FixedUpdate()
     {
-        MovePlayer();
+        if (_canMove)
+            MovePlayer();
     }
     private void GroundCheck()
     {
@@ -59,7 +66,7 @@ public class PlayerMovement : MonoBehaviour
         float additionalLength = 0.2f;
 
         _grounded = Physics.Raycast(transform.position, Vector3.down, _playerHeight * playerHalf * additionalLength, _whatIsGround);
-        
+
     }
 
     private void MyInput()
@@ -84,8 +91,8 @@ public class PlayerMovement : MonoBehaviour
         _moveDirection = _orientation.forward * _verticalInput + _orientation.right * _horizontalInput;
 
         float speedMultiplier = 10f;
-        if(_grounded)
-        _rigidbody.AddForce(_moveDirection.normalized * _moveSpeed * speedMultiplier, ForceMode.Force);
+        if (_grounded)
+            _rigidbody.AddForce(_moveDirection.normalized * _moveSpeed * speedMultiplier, ForceMode.Force);
         else
         {
             _rigidbody.AddForce(_moveDirection.normalized * _moveSpeed * speedMultiplier * _airMultiplier, ForceMode.Force);
@@ -111,9 +118,14 @@ public class PlayerMovement : MonoBehaviour
         _rigidbody.AddForce(transform.up * _jumpForce, ForceMode.Impulse);
     }
 
-    private void ResetJump() 
+    private void ResetJump()
     {
         _readyToJump = true;
     }
+
+    public void ToggleMovement() 
+    {
+        _canMove = !_canMove;
+    } 
 }
 

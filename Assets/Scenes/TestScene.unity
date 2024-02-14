@@ -2637,6 +2637,26 @@ PrefabInstance:
       propertyPath: m_Name
       value: PuzzleCanvas
       objectReference: {fileID: 0}
+    - target: {fileID: 3619591598710025973, guid: 8be543131e803a348b3838d6c7138082,
+        type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 0.7071068
+      objectReference: {fileID: 0}
+    - target: {fileID: 3619591598710025973, guid: 8be543131e803a348b3838d6c7138082,
+        type: 3}
+      propertyPath: m_LocalRotation.z
+      value: 0.7071068
+      objectReference: {fileID: 0}
+    - target: {fileID: 3619591598710025973, guid: 8be543131e803a348b3838d6c7138082,
+        type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 90
+      objectReference: {fileID: 0}
+    - target: {fileID: 4780833043646395177, guid: 8be543131e803a348b3838d6c7138082,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 5850628376576473951, guid: 8be543131e803a348b3838d6c7138082,
         type: 3}
       propertyPath: m_Pivot.x

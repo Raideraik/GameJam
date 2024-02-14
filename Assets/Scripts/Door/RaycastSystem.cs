@@ -32,7 +32,8 @@ public class RaycastSystem : MonoBehaviour
                         door.UseItem();
                     }
                 }
-            }else if (hit.transform.TryGetComponent(out ButtonActivator button))
+            }
+            else if (hit.transform.TryGetComponent(out ButtonActivator button))
             {
                 TryChangeCrosshair();
                 if (Hand.Instance.TackedObject() != null)
@@ -42,21 +43,22 @@ public class RaycastSystem : MonoBehaviour
                         button.UseItem();
                     }
                 }
-            }else if (hit.transform.TryGetComponent(out TableController table))
+            }
+            else if (hit.transform.TryGetComponent(out TableController table))
             {
                 TryChangeCrosshair();
-               
-                    if (Input.GetKeyDown(_interactKey))
-                    {
-                        table.PlayAnimation();
-                    }
-                
+
+                if (Input.GetKeyDown(_interactKey))
+                {
+                    table.PlayAnimation();
+                }
+
             }
             else if (hit.transform.TryGetComponent(out PuzzleController puzzle))
             {
                 TryChangeCrosshair();
 
-                if (Input.GetKeyDown(_interactKey))
+                if (Input.GetKeyDown(_interactKey) && PlayerCam.Instance.IsCamActive)
                 {
                     PuzzleController.Instance.ActivatePuzzle();
                 }
