@@ -8,6 +8,7 @@ public interface IItems
     {
         Key,
         Box,
-        Book
+        Book,
+        Chess
     }
 }

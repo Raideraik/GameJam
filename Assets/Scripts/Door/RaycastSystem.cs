@@ -43,6 +43,28 @@ public class RaycastSystem : MonoBehaviour
                         button.UseItem();
                     }
                 }
+            }  
+            else if (hit.transform.TryGetComponent(out BookPlace bookPlace))
+            {
+                TryChangeCrosshair();
+                if (Hand.Instance.TackedObject() != null)
+                {
+                    if (Input.GetKeyDown(_interactKey))
+                    {
+                        bookPlace.UseItem();
+                    }
+                }
+            }  
+            else if (hit.transform.TryGetComponent(out ChessPlaces chessPlace))
+            {
+                TryChangeCrosshair();
+                if (Hand.Instance.TackedObject() != null)
+                {
+                    if (Input.GetKeyDown(_interactKey))
+                    {
+                        chessPlace.UseItem();
+                    }
+                }
             }           
             else if (hit.transform.TryGetComponent(out InteractableObject interactableObject))
             {
@@ -62,6 +84,14 @@ public class RaycastSystem : MonoBehaviour
                 {
                     PuzzleController.Instance.ActivatePuzzle();
                 }
+            }else if (hit.transform.TryGetComponent(out LetterController letter))
+            {
+                TryChangeCrosshair();
+
+                if (Input.GetKeyDown(_interactKey) && PlayerCam.Instance.IsCamActive)
+                {
+                    letter.OpenLetter();
+                }
             }
             else if (hit.transform.TryGetComponent(out TackableObject tackableObject))
             {
@@ -78,6 +108,14 @@ public class RaycastSystem : MonoBehaviour
                         Hand.Instance.TakeItem(tackableObject);
                         tackableObject.gameObject.SetActive(false);
                     }
+                }
+            }
+            else
+            {
+                if (_isCrosshairActive)
+                {
+                    CrosshairChange(false);
+                    _doOnce = false;
                 }
             }
 

@@ -24,7 +24,7 @@ public class BoxWithIndicator : MonoBehaviour
     {
         for (int i = 0; i < _indicators.Count; i++)
         {
-            Debug.Log(_indicators[i] == e && i < _indicators.Count && _indicators[i].GetIsMaterialGreen());
+            //Debug.Log(_indicators[i] == e && i < _indicators.Count && _indicators[i].GetIsMaterialGreen());
 
             if (_indicators[i] == e && i < _indicators.Count)
             {
@@ -64,17 +64,17 @@ public class BoxWithIndicator : MonoBehaviour
         {
             if (item.GetIsMaterialGreen())
             {
-                _greenIndicators++;
-
-                if (_greenIndicators == _indicators.Count)
-                {
-                    Debug.Log("Win!");
-                }
-                else
-                {
-                    _greenIndicators = 0;
-                }
+                _greenIndicators++;               
             }
+        }
+
+        if (_greenIndicators == _indicators.Count)
+        {
+            Debug.Log("Win!");
+        }
+        else
+        {
+            _greenIndicators = 0;
         }
     }
 }
