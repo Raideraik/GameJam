@@ -3,7 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class PuzzleController : MonoBehaviour
+public class PuzzleController : UIActivator
 {
     public event EventHandler OnPuzzleActivation;
     public event EventHandler OnPuzzleDeActivation;
@@ -31,4 +31,8 @@ public class PuzzleController : MonoBehaviour
         PlayerMovement.Instance.ToggleMovement();
     }
 
+    public override void ActivateUI()
+    {
+        ActivatePuzzle();
+    }
 }

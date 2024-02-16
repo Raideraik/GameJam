@@ -14,6 +14,6 @@ public class DTWGoal : MonoBehaviour, IPointerEnterHandler
         Invoke("UnlockCursor", 0.05f);
     }
 
-    private void UnlockCursor() => Cursor.lockState = CursorLockMode.None;
+    private void UnlockCursor() => Cursor.lockState = CursorLockMode.Confined;
 
 }

@@ -8,9 +8,10 @@ public class DTWUI : MonoBehaviour
 {
     public static DTWUI Instance { get; private set; }
 
-    [SerializeField] private GameObject _screen;
+    [SerializeField] private GameObject[] _screenLevel;
     [SerializeField] private int _wallsProhibitedTouchCount = 3;
     [SerializeField] private int _goalNeedToTouchCount = 3;
+    //[SerializeField] private Texture2D _cursor;
 
     private int _wallsTouchedCount = 0;
     private int _goalTouchedCount = 0;
@@ -30,6 +31,7 @@ public class DTWUI : MonoBehaviour
     private void DTWGoal_OnDTWGoalTouched(object sender, System.EventArgs e)
     {
         _goalTouchedCount++;
+        SelectNewLevel();
         if (_goalTouchedCount >= _goalNeedToTouchCount)
         {
             DeactivateGame();
@@ -40,11 +42,19 @@ public class DTWUI : MonoBehaviour
     private void OnAnyWallTouched(object sender, System.EventArgs e)
     {
         _wallsTouchedCount++;
+        SelectNewLevel();
         if (_wallsTouchedCount >= _wallsProhibitedTouchCount)
         {
             DeactivateGame();
         }
     }
+
+    private void SelectNewLevel()
+    {
+        Hide();
+        Show();
+    }
+
 
     private void DeactivateGame()
     {
@@ -59,19 +69,23 @@ public class DTWUI : MonoBehaviour
     {
         _wallsTouchedCount = 0;
         Show();
-        Cursor.lockState = CursorLockMode.Confined;
         Cursor.visible = true;
+        //Cursor.SetCursor(_cursor, Vector2.zero, CursorMode.ForceSoftware);
+        Cursor.lockState = CursorLockMode.Confined;
         PlayerCam.Instance.ToggleCam();
         PlayerMovement.Instance.ToggleMovement();
     }
     private void Show()
     {
-        _screen.SetActive(true);
+        _screenLevel[Random.Range(0, _screenLevel.Length)].SetActive(true);
 
     }
     private void Hide()
     {
-        _screen.SetActive(false);
+        for (int i = 0; i < _screenLevel.Length; i++)
+        {
+            _screenLevel[i].SetActive(false);
+        }
 
     }
 }
