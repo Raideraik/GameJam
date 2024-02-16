@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 
 [RequireComponent(typeof(Animator))]
-public class ButtonActivator : MonoBehaviour, IItems
+public class ButtonActivator : HandheldActivator, IItems
 {
     [SerializeField] private IItems.Items _items;
     [SerializeField] private PortalController _portalController;
@@ -19,7 +19,7 @@ public class ButtonActivator : MonoBehaviour, IItems
             _animator.SetTrigger("SetBox");
     }
 
-    public void UseItem()
+    public override void UseItem()
     {
         if (Hand.Instance.TackedObject().ItemType == _items)
         {

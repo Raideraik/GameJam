@@ -21,7 +21,7 @@ public class RaycastSystem : MonoBehaviour
         Vector3 forward = transform.TransformDirection(Vector3.forward);
 
         if (Physics.Raycast(transform.position, forward, out hit, _rayLength))
-        {
+        {/*
             if (hit.transform.TryGetComponent(out DoorController door))
             {
                 TryChangeCrosshair();
@@ -32,40 +32,18 @@ public class RaycastSystem : MonoBehaviour
                         door.UseItem();
                     }
                 }
+            }*/
+            if (hit.transform.TryGetComponent(out HandheldActivator activator))
+            {
+                TryChangeCrosshair();
+                if (Hand.Instance.TackedObject() != null)
+                {
+                    if (Input.GetKeyDown(_interactKey))
+                    {
+                        activator.UseItem();
+                    }
+                }
             }
-            else if (hit.transform.TryGetComponent(out ButtonActivator button))
-            {
-                TryChangeCrosshair();
-                if (Hand.Instance.TackedObject() != null)
-                {
-                    if (Input.GetKeyDown(_interactKey))
-                    {
-                        button.UseItem();
-                    }
-                }
-            }  
-            else if (hit.transform.TryGetComponent(out BookPlace bookPlace))
-            {
-                TryChangeCrosshair();
-                if (Hand.Instance.TackedObject() != null)
-                {
-                    if (Input.GetKeyDown(_interactKey))
-                    {
-                        bookPlace.UseItem();
-                    }
-                }
-            }  
-            else if (hit.transform.TryGetComponent(out ChessPlaces chessPlace))
-            {
-                TryChangeCrosshair();
-                if (Hand.Instance.TackedObject() != null)
-                {
-                    if (Input.GetKeyDown(_interactKey))
-                    {
-                        chessPlace.UseItem();
-                    }
-                }
-            }           
             else if (hit.transform.TryGetComponent(out InteractableObject interactableObject))
             {
                 TryChangeCrosshair();
@@ -84,13 +62,23 @@ public class RaycastSystem : MonoBehaviour
                 {
                     PuzzleController.Instance.ActivatePuzzle();
                 }
-            }else if (hit.transform.TryGetComponent(out LetterController letter))
+            }
+            else if (hit.transform.TryGetComponent(out LetterController letter))
             {
                 TryChangeCrosshair();
 
                 if (Input.GetKeyDown(_interactKey) && PlayerCam.Instance.IsCamActive)
                 {
                     letter.OpenLetter();
+                }
+            }
+            else if (hit.transform.TryGetComponent(out UIActivator uiActivator))
+            {
+                TryChangeCrosshair();
+
+                if (Input.GetKeyDown(_interactKey) && PlayerCam.Instance.IsCamActive)
+                {
+                    uiActivator.ActivateUI();
                 }
             }
             else if (hit.transform.TryGetComponent(out TackableObject tackableObject))

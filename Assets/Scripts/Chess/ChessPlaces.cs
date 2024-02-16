@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class ChessPlaces : MonoBehaviour, IItems
+public class ChessPlaces : HandheldActivator, IItems
 {
     [SerializeField] private bool _isHorse;
     [SerializeField] private bool _isCorrectPlace;
@@ -51,7 +51,7 @@ public class ChessPlaces : MonoBehaviour, IItems
 
     }
 
-    public void UseItem()
+    public override void UseItem()
     {
         if (Hand.Instance.TackedObject().ItemType == _items && !ChessBoard.Instance.IsGameEnded())
         {

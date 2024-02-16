@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class DoorController : InteractableObject, IItems
+public class DoorController : HandheldActivator, IItems
 {
     [SerializeField] private GameObject[] _portals;
 

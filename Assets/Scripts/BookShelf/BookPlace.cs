@@ -3,7 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class BookPlace : MonoBehaviour,IItems
+public class BookPlace : HandheldActivator,IItems
 {
     public static event EventHandler OnAnyBookSetCorrrect;
 
@@ -44,7 +44,7 @@ public class BookPlace : MonoBehaviour,IItems
         }
     }
 
-    public void UseItem()
+    public override void UseItem()
     {
         if (Hand.Instance.TackedObject().ItemType == _items)
         {
