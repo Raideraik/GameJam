@@ -1,16 +1,16 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.UIElements;
 
 public class CardManager : MonoBehaviour
 {
     [SerializeField] private List<Card> _cards;
     [SerializeField] private List<Material> _materialsBack;
-    [SerializeField] private Material _materialsFront;
+    [SerializeField] private float _waitTime;
 
     private int _tempMaterialIndex;
     private Card _tempCard;
+    private IEnumerator _coroutine;
     private void Start()
     {
         for (int i = 0; i < _cards.Count; i++)
@@ -21,19 +21,25 @@ public class CardManager : MonoBehaviour
     }
 
     private void SetCardsMaterials()
-    {
+    {/*
         for (int i = 0; i < _cards.Count; i++)
         {
-            _tempMaterialIndex = Random.Range(0, _materialsBack.Count);
-            Debug.Log("card id =" + _cards[i].Id);
-            Debug.Log(_tempMaterialIndex);
-            foreach (var item in _cards)
+            _tempMaterialIndex = Random.Range(, _materialsBack.Count);
+            for (int j = 0; j < _cards.Count; j++)
             {
-                if (_cards[i].Id == item.Id)
+                if (_cards[i].Id == _cards[j].Id)
                 {
-                    Debug.Log("Item id =" + item.Id + " " + item.name);
-                    //_cards[i].SetMaterial(_materialsFront, _materialsBack[_tempMaterialIndex]);
-                    item.SetMaterial(_materialsFront, _materialsBack[_tempMaterialIndex]);
+                    _cards[j].SetMaterial(_materialsBack[_tempMaterialIndex]);
+                }
+            }
+        }*/
+        for (int i = 0; i < _cards.Count; i++)
+        {
+            for (int j = 0; j < _cards.Count; j++)
+            {
+                if (_cards[i].Id == _cards[j].Id)
+                {
+                    _cards[j].SetMaterial(_materialsBack[_cards[i].Id]);
                 }
             }
         }
@@ -54,9 +60,8 @@ public class CardManager : MonoBehaviour
             }
             else
             {
-                card.FlipCardFalse();
-                _tempCard.FlipCardFalse();
-                _tempCard = null;
+                _coroutine = FlipCardToFalse(card);
+                StartCoroutine(_coroutine);
             }
         }
         else
@@ -69,6 +74,31 @@ public class CardManager : MonoBehaviour
     {
         _tempCard.SetFlippedCorrect();
         card.SetFlippedCorrect();
+        _tempCard = null;
+        TryWin();
+    }
+
+    private void TryWin()
+    {
+        int correctCount = 0;
+        for (int i = 0; i < _cards.Count; i++)
+        {
+            if (_cards[i].FlippedCorrect)
+            {
+                correctCount++;
+            }
+        }
+
+        if (correctCount >= _cards.Count)
+        {
+            Debug.Log("WIN!!");
+        }
+    }
+    private IEnumerator FlipCardToFalse(Card card)
+    {
+        yield return new WaitForSeconds(_waitTime);
+        card.FlipCardFalse();
+        _tempCard.FlipCardFalse();
         _tempCard = null;
 
     }

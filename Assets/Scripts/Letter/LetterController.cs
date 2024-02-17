@@ -4,11 +4,10 @@ using UnityEngine;
 
 public class LetterController : UIActivator
 {
-    [TextArea(3, 10)]
-    [SerializeField] private string _myText;
+    [SerializeField] private Sprite _letter;
 
     public override void ActivateUI()
     {
-        LetterUI.Instance.OpenLetter(_myText);
+        LetterUI.Instance.OpenLetter(_letter);
     }
 }

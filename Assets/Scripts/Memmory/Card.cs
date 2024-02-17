@@ -10,19 +10,19 @@ public class Card : InteractableObject
 
     [SerializeField] private bool _isFlipped = false;
     [SerializeField] private int _id;
-    [SerializeField] private MeshRenderer _backMeshRenderer;
-    private MeshRenderer _frontMeshRenderer;
+    private MeshRenderer _meshRenderer;
     private float _tempTransform;
     private bool _flippedCorrect = false;
     public bool FlippedCorrect => _flippedCorrect;
-
-    public bool IsFlipped => _isFlipped;
     public int Id => _id;
 
+    private void Awake()
+    {
+        _meshRenderer = GetComponent<MeshRenderer>();
+    }
     private void Start()
     {
         _tempTransform = transform.eulerAngles.y;
-        _frontMeshRenderer = GetComponent<MeshRenderer>();
     }
 
     public void FlipCardTrue()
@@ -33,8 +33,8 @@ public class Card : InteractableObject
         _isFlipped = true;
         transform.DORotate(new Vector3(transform.rotation.x, _tempTransform - 180f, transform.rotation.z), 1f);
 
-       // if (!_isFlipped)
-            OnCardFlipped?.Invoke(this, this);
+        // if (!_isFlipped)
+        OnCardFlipped?.Invoke(this, this);
     }
     public void FlipCardFalse()
     {
@@ -47,10 +47,10 @@ public class Card : InteractableObject
         _flippedCorrect = true;
     }
 
-    public void SetMaterial(Material front, Material back)
+    public void SetMaterial(Material front)
     {
-        _frontMeshRenderer.material = front;
-        _backMeshRenderer.material = back;
+        //Debug.Log("Sett");
+        _meshRenderer.material = front;
     }
 
     public override void UseItem()

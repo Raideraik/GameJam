@@ -4,10 +4,11 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.EventSystems;
 
-public class DTWWall : MonoBehaviour, IPointerEnterHandler
+public class DTWWall : MonoBehaviour, IPointerExitHandler
 {
     public static event EventHandler OnAnyWallTouched;
-    public void OnPointerEnter(PointerEventData eventData)
+
+    public void OnPointerExit(PointerEventData eventData)
     {
         OnAnyWallTouched?.Invoke(this, EventArgs.Empty);
         Cursor.lockState = CursorLockMode.Locked;

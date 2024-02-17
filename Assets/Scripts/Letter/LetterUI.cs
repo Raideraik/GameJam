@@ -11,8 +11,7 @@ public class LetterUI : MonoBehaviour
 
     [SerializeField] private Button _exitButton;
     [SerializeField] private GameObject _screen;
-    [SerializeField] private TMP_Text _text;
-
+    [SerializeField] private Image _image;
     private void Awake()
     {
         Instance = this;
@@ -32,9 +31,9 @@ public class LetterUI : MonoBehaviour
         Hide();
     }
 
-    public void OpenLetter(string text)
+    public void OpenLetter(Sprite letter)
     {
-        _text.text = text;
+        _image.sprite = letter;
         Show();
         Cursor.lockState = CursorLockMode.Confined;
         Cursor.visible = true;
