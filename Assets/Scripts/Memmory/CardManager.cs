@@ -7,7 +7,9 @@ public class CardManager : MonoBehaviour
     [SerializeField] private List<Card> _cards;
     [SerializeField] private List<Material> _materialsBack;
     [SerializeField] private float _waitTime;
+    [SerializeField] private GameObject _gameObjectToActivate;
 
+    private List<int> usedIDs = new List<int>();
     private int _tempMaterialIndex;
     private Card _tempCard;
     private IEnumerator _coroutine;
@@ -21,18 +23,18 @@ public class CardManager : MonoBehaviour
     }
 
     private void SetCardsMaterials()
-    {/*
-        for (int i = 0; i < _cards.Count; i++)
+    {
+        // Перемешиваем массив объектов
+        ShuffleArray(_cards);
+
+        // Присваиваем ID парам случайных объектов
+        for (int i = 0; i < _cards.Count; i += 2)
         {
-            _tempMaterialIndex = Random.Range(, _materialsBack.Count);
-            for (int j = 0; j < _cards.Count; j++)
-            {
-                if (_cards[i].Id == _cards[j].Id)
-                {
-                    _cards[j].SetMaterial(_materialsBack[_tempMaterialIndex]);
-                }
-            }
-        }*/
+            int id = GetRandomID();
+            _cards[i].SetId(id);
+            _cards[i + 1].SetId(id);
+        }
+
         for (int i = 0; i < _cards.Count; i++)
         {
             for (int j = 0; j < _cards.Count; j++)
@@ -44,7 +46,28 @@ public class CardManager : MonoBehaviour
             }
         }
     }
+    private int GetRandomID()
+    {
+        int id;
+        do
+        {
+            id = Random.Range(0, _materialsBack.Count);
+        } while (usedIDs.Contains(id));
 
+        usedIDs.Add(id);
+        return id;
+    }
+
+    private void ShuffleArray(List<Card> array)
+    {
+        for (int i = 0; i < array.Count; i++)
+        {
+            int randomIndex = Random.Range(i, array.Count);
+            Card temp = array[i];
+            array[i] = array[randomIndex];
+            array[randomIndex] = temp;
+        }
+    }
     private void OnCardFlipped(object sender, Card card)
     {
         CheckCards(card);
@@ -91,7 +114,7 @@ public class CardManager : MonoBehaviour
 
         if (correctCount >= _cards.Count)
         {
-            Debug.Log("WIN!!");
+            _gameObjectToActivate.SetActive(true);
         }
     }
     private IEnumerator FlipCardToFalse(Card card)

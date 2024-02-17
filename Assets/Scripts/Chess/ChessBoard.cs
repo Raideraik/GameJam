@@ -9,6 +9,7 @@ public class ChessBoard : MonoBehaviour
     private bool _isGameEnded = false;
     [SerializeField] private ChessPlaces[] _placesToDeactivate;
     [SerializeField] private GameObject[] _piecesToDeactivate;
+    [SerializeField] private GameObject _gameObjectToActivate;
 
     private void Start()
     {
@@ -18,16 +19,14 @@ public class ChessBoard : MonoBehaviour
     public void CheckMate()
     {
         _isGameEnded = true;
-        /*
-        for (int i = 0; i < _placesToDeactivate.Length; i++)
-        {
-            _placesToDeactivate[i].enabled = false;
-            _placesToDeactivate[i].GetComponent<Collider>().enabled = false;
-        }*/
+
         for (int i = 0; i < _piecesToDeactivate.Length; i++)
         {
             _piecesToDeactivate[i].SetActive(!_piecesToDeactivate[i].activeSelf);
         }
+
+        _gameObjectToActivate.SetActive(true);
+
     }
 
     public bool IsGameEnded()

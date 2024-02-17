@@ -5,10 +5,12 @@ using UnityEngine;
 public class BookControll : MonoBehaviour
 {
     [SerializeField] private BookPlace[] _bookPlaces;
+    private Animator _animator;
 
     private int _correctBooks = 0;
     private void Start()
     {
+        _animator = GetComponent<Animator>();
         BookPlace.OnAnyBookSetCorrrect += OnAnyBookSetCorrrect;
     }
 
@@ -18,7 +20,12 @@ public class BookControll : MonoBehaviour
 
         if (_correctBooks == _bookPlaces.Length)
         {
-            Debug.Log("Win!!");
+            Open();
         }
+    }
+
+    private void Open()
+    {
+        _animator.SetTrigger("Open");
     }
 }

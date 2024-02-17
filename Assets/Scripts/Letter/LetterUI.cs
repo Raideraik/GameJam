@@ -23,10 +23,11 @@ public class LetterUI : MonoBehaviour
         _exitButton.onClick.AddListener(() =>
         {
             Hide();
+            PauseMenu.Instance.ToggleGame();/*
             Cursor.lockState = CursorLockMode.Locked;
             Cursor.visible = false;
             PlayerCam.Instance.ToggleCam();
-            PlayerMovement.Instance.ToggleMovement();
+            PlayerMovement.Instance.ToggleMovement();*/
         });
         Hide();
     }
@@ -35,10 +36,11 @@ public class LetterUI : MonoBehaviour
     {
         _image.sprite = letter;
         Show();
+        PauseMenu.Instance.ToggleGame();/*
         Cursor.lockState = CursorLockMode.Confined;
         Cursor.visible = true;
         PlayerCam.Instance.ToggleCam();
-        PlayerMovement.Instance.ToggleMovement();
+        PlayerMovement.Instance.ToggleMovement();*/
     }
     private void Show()
     {

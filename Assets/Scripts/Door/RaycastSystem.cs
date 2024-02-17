@@ -19,6 +19,10 @@ public class RaycastSystem : MonoBehaviour
     {
         RaycastHit hit;
         Vector3 forward = transform.TransformDirection(Vector3.forward);
+        if (PauseMenu.Instance.IsGamePaused)
+            return;
+
+
 
         if (Physics.Raycast(transform.position, forward, out hit, _rayLength))
         {

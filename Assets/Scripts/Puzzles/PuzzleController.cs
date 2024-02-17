@@ -5,18 +5,13 @@ using UnityEngine;
 
 public class PuzzleController : UIActivator
 {
-    public event EventHandler OnPuzzleActivation;
-    public event EventHandler OnPuzzleDeActivation;
+    public event EventHandler<int> OnPuzzleActivation;
 
-    public static PuzzleController Instance;
-    private void Awake()
-    {
-        Instance = this;
-    }
+    [SerializeField] private int _id;
 
     public void ActivatePuzzle()
     {
-        OnPuzzleActivation?.Invoke(this, EventArgs.Empty);
+        OnPuzzleActivation?.Invoke(this, _id);
         Cursor.lockState = CursorLockMode.Confined;
         Cursor.visible = true;
         PlayerCam.Instance.ToggleCam();
@@ -24,7 +19,6 @@ public class PuzzleController : UIActivator
     }
     public void DeActivatePuzzle()
     {
-        OnPuzzleDeActivation?.Invoke(this, EventArgs.Empty);
         Cursor.lockState = CursorLockMode.Locked;
         Cursor.visible = false;
         PlayerCam.Instance.ToggleCam();

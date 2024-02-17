@@ -1,17 +1,18 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
-using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
+using Random = UnityEngine.Random;
 
 public class DTWUI : MonoBehaviour
 {
     public static DTWUI Instance { get; private set; }
+    public event EventHandler OnEndReached;
 
     [SerializeField] private GameObject[] _screenLevel;
     [SerializeField] private int _wallsProhibitedTouchCount = 3;
     [SerializeField] private int _goalNeedToTouchCount = 3;
-    [SerializeField] private Texture2D _cursor;
 
     private int _wallsTouchedCount = 0;
     private int _goalTouchedCount = 0;
@@ -34,8 +35,8 @@ public class DTWUI : MonoBehaviour
         SelectNewLevel();
         if (_goalTouchedCount >= _goalNeedToTouchCount)
         {
+            OnEndReached?.Invoke(this, EventArgs.Empty);
             DeactivateGame();
-            Debug.Log("Win!!");
         }
     }
 
@@ -71,7 +72,6 @@ public class DTWUI : MonoBehaviour
         _wallsTouchedCount = 0;
         Show();
         Cursor.visible = true;
-        Cursor.SetCursor(_cursor, Vector2.zero, CursorMode.Auto);
         Cursor.lockState = CursorLockMode.Confined;
         PlayerCam.Instance.ToggleCam();
         PlayerMovement.Instance.ToggleMovement();

@@ -3,13 +3,14 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class BookPlace : HandheldActivator,IItems
+public class BookPlace : HandheldActivator, IItems
 {
     public static event EventHandler OnAnyBookSetCorrrect;
 
     [SerializeField] private IItems.Items _items;
     [SerializeField] private Book _book;
     [SerializeField] private TackableObject _bookGameObject;
+    //[SerializeField] private GameObject _visual;
 
     private Book _tackedBook;
     private MeshRenderer _meshRenderer;
@@ -39,6 +40,7 @@ public class BookPlace : HandheldActivator,IItems
         if (_book == _tackedBook)
         {
             _isCorrectBook = true;
+            //_visual.SetActive(true);
             _bookGameObject.GetComponent<Collider>().enabled = false;
             OnAnyBookSetCorrrect?.Invoke(this, EventArgs.Empty);
         }

@@ -9,9 +9,14 @@ public class MainMenu : MonoBehaviour
     [SerializeField] private string _levelName;
     private void Start()
     {
+        Cursor.visible = true;
+        Cursor.lockState = CursorLockMode.Confined;
+
         _startButton.onClick.AddListener(() =>
         {
-            LevelManager.Instance.LoadLevel(_levelName);
+            //LevelManager.Instance.LoadLevel(_levelName);
+            SceneFader.Instance.FadeIn(_levelName);
+            PlayerPrefs.SetInt("Video", 0);
         });
         _exitButton.onClick.AddListener(() =>
         {

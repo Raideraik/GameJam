@@ -9,11 +9,13 @@ public class BoxWithIndicator : MonoBehaviour
     [SerializeField] private Material _red;
     [SerializeField] private Material _green;
 
+    private Animator _animator;
     private int _tempIndex;
     private int _greenIndicators = 0;
 
     private void Start()
     {
+        _animator = GetComponent<Animator>();
         for (int i = 0; i < _indicators.Count; i++)
         {
             _indicators[i].OnAnyIndicatorClick += BoxWithIndicator_OnAnyIndicatorClick;
@@ -24,12 +26,9 @@ public class BoxWithIndicator : MonoBehaviour
     {
         for (int i = 0; i < _indicators.Count; i++)
         {
-            //Debug.Log(_indicators[i] == e && i < _indicators.Count && _indicators[i].GetIsMaterialGreen());
-
             if (_indicators[i] == e && i < _indicators.Count)
             {
                 _tempIndex = i + 1;
-                //Debug.Log(_tempIndex);
 
                 if (_indicators[i].GetIsMaterialGreen())
                 {
@@ -64,17 +63,22 @@ public class BoxWithIndicator : MonoBehaviour
         {
             if (item.GetIsMaterialGreen())
             {
-                _greenIndicators++;               
+                _greenIndicators++;
             }
         }
 
         if (_greenIndicators == _indicators.Count)
         {
-            Debug.Log("Win!");
+            OpenBox();
         }
         else
         {
             _greenIndicators = 0;
         }
+    }
+
+    private void OpenBox()
+    {
+        _animator.SetTrigger("Open");
     }
 }

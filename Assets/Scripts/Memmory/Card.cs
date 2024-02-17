@@ -52,6 +52,12 @@ public class Card : InteractableObject
         //Debug.Log("Sett");
         _meshRenderer.material = front;
     }
+    
+    public void SetId(int id)
+    {
+        //Debug.Log("Sett");
+        _id = id;
+    }
 
     public override void UseItem()
     {
