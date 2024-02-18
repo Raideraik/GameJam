@@ -13,6 +13,7 @@ public class DTWUI : MonoBehaviour
     [SerializeField] private GameObject[] _screenLevel;
     [SerializeField] private int _wallsProhibitedTouchCount = 3;
     [SerializeField] private int _goalNeedToTouchCount = 3;
+    [SerializeField] private Texture2D _newCursour;
 
     private int _wallsTouchedCount = 0;
     private int _goalTouchedCount = 0;
@@ -24,19 +25,30 @@ public class DTWUI : MonoBehaviour
 
     private void Start()
     {
-        DTWWall.OnAnyWallTouched += OnAnyWallTouched;
         DTWGoal.OnDTWGoalTouched += DTWGoal_OnDTWGoalTouched;
+        DTWWall.OnAnyWallTouched += OnAnyWallTouched;
         Hide();
+    }
+
+    private void OnDisable()
+    {
+
+        DTWGoal.OnDTWGoalTouched -= DTWGoal_OnDTWGoalTouched;
+        DTWWall.OnAnyWallTouched -= OnAnyWallTouched;
     }
 
     private void DTWGoal_OnDTWGoalTouched(object sender, System.EventArgs e)
     {
+        if (_wallsTouchedCount > 0)
+            _wallsTouchedCount--;
+
         _goalTouchedCount++;
         SelectNewLevel();
         if (_goalTouchedCount >= _goalNeedToTouchCount)
         {
             OnEndReached?.Invoke(this, EventArgs.Empty);
             DeactivateGame();
+           gameObject.SetActive(false);
         }
     }
 
@@ -59,22 +71,29 @@ public class DTWUI : MonoBehaviour
 
     private void DeactivateGame()
     {
+        PauseMenu.Instance.SwitchCanPause();
         Hide();
+        PauseMenu.Instance.ToggleGame();
+        Cursor.SetCursor(null, Vector2.zero, CursorMode.Auto);
+        /*
         Cursor.lockState = CursorLockMode.Locked;
         Cursor.visible = false;
-        Cursor.SetCursor(null, Vector2.zero, CursorMode.Auto);
         PlayerCam.Instance.ToggleCam();
-        PlayerMovement.Instance.ToggleMovement();
+        PlayerMovement.Instance.ToggleMovement();*/
     }
 
     public void ActivateGame()
     {
+        PauseMenu.Instance.SwitchCanPause();
         _wallsTouchedCount = 0;
+        _goalTouchedCount = 0;
         Show();
-        Cursor.visible = true;
-        Cursor.lockState = CursorLockMode.Confined;
-        PlayerCam.Instance.ToggleCam();
-        PlayerMovement.Instance.ToggleMovement();
+        PauseMenu.Instance.ToggleGame();
+        Cursor.SetCursor(_newCursour, Vector2.zero, CursorMode.Auto);
+        /* Cursor.visible = true;
+         Cursor.lockState = CursorLockMode.Confined;
+         PlayerCam.Instance.ToggleCam();
+         PlayerMovement.Instance.ToggleMovement();*/
     }
     private void Show()
     {

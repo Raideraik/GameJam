@@ -6,7 +6,7 @@ public class DTWControll : UIActivator
 {
     private Animator _animator;
     private bool _gameEnded;
-    private void Start()
+    private void Awake()
     {
         _animator = GetComponent<Animator>();
 
@@ -15,10 +15,10 @@ public class DTWControll : UIActivator
 
     private void OnEndReached(object sender, System.EventArgs e)
     {
-        PlayAnimation();
+        Invoke("PlayAnimation", 1);
     }
 
-    public void PlayAnimation()
+    private void PlayAnimation()
     {
         _gameEnded = true;
         _animator.SetTrigger("Open");

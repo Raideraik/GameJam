@@ -13,6 +13,8 @@ public class PauseMenu : MonoBehaviour
     [SerializeField] private Button _exitButton;
 
     private KeyCode _pauseKey = KeyCode.Escape;
+    private bool _canPause = true;
+
     private bool _isGamePaused = false;
     public bool IsGamePaused => _isGamePaused;
 
@@ -55,9 +57,19 @@ public class PauseMenu : MonoBehaviour
         PlayerMovement.Instance.ToggleMovement();
     }
 
+    public void SwitchCanPause()
+    {
+        _canPause = !_canPause;
+    }
+
     private void ShowScreen()
     {
-        _pauseScreen.SetActive(!_pauseScreen.activeSelf);
-        ToggleGame();
+        if (_canPause)
+        {
+            _pauseScreen.SetActive(!_pauseScreen.activeSelf);
+            ToggleGame();
+        }
     }
+
+
 }
