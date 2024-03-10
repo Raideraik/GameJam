@@ -120,3 +120,4 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   ItemType: 1
   Item: {fileID: 2840419990373985589, guid: 4fe06924fa0cad842be74eb54dd35a57, type: 3}
+  Clip: {fileID: 8300000, guid: 6f92102a55de23e4fb995aaffce9c122, type: 3}

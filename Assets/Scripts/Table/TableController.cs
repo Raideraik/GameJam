@@ -9,21 +9,23 @@ public class TableController : InteractableObject
     private bool _tableOpened = false;
     [SerializeField] private float _openLength = 0.3f;
     private int _waitTime = 1;
-
+    [SerializeField] private AudioClip _audioClipOpen;
+    [SerializeField] private AudioClip _audioClipClose;
     public void ToggleDesk()
     {
         if (_canUse)
         {
             if (!_tableOpened)
             {
+                SoundsController.Instance.PlaySound(_audioClipOpen);
                 _canUse = false;
                 transform.DOLocalMoveX(transform.localPosition.x - _openLength, 1, false);
                 StartCoroutine(ExecuteAfterTime(_waitTime));
-
                 _tableOpened = true;
             }
             else
             {
+                SoundsController.Instance.PlaySound(_audioClipClose);
                 _canUse = false;
                 StartCoroutine(ExecuteAfterTime(_waitTime));
                 transform.DOLocalMoveX(transform.localPosition.x + _openLength, 1, false);

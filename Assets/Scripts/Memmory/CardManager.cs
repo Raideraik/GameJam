@@ -8,6 +8,7 @@ public class CardManager : MonoBehaviour
     [SerializeField] private List<Material> _materialsBack;
     [SerializeField] private float _waitTime;
     [SerializeField] private GameObject _gameObjectToActivate;
+    [SerializeField] private AudioClip _clip;
 
     private List<int> usedIDs = new List<int>();
     private int _tempMaterialIndex;
@@ -114,6 +115,7 @@ public class CardManager : MonoBehaviour
 
         if (correctCount >= _cards.Count)
         {
+            SoundsController.Instance.PlaySound(_clip);
             _gameObjectToActivate.SetActive(true);
         }
     }

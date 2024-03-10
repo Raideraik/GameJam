@@ -6,7 +6,7 @@ public class ActivationButton : InteractableObject
 {
     [SerializeField] private GameObject[] _activationObjects;
     private Animator _animator;
-
+    [SerializeField] private AudioClip _clip;
     private void Awake()
     {
         _animator = gameObject.GetComponent<Animator>();
@@ -16,7 +16,7 @@ public class ActivationButton : InteractableObject
     {
         _animator.SetTrigger("Use");
 
-
+        SoundsController.Instance.PlaySound(_clip);
         ActivatePortal();
 
     }

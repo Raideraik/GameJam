@@ -17,6 +17,7 @@ public class Hand : MonoBehaviour
     {
         _tackedObject = itemToTake;
         _objectInHand = Instantiate(itemToTake.Item, _holder);
+        SoundsController.Instance.PlaySound(itemToTake.Clip);
 
     }
 
@@ -31,13 +32,13 @@ public class Hand : MonoBehaviour
         DestroyItem();
     }
 
-    public void DestroyItem() 
+    public void DestroyItem()
     {
         Destroy(_objectInHand);
         _tackedObject = null;
     }
 
-    public TackableObject TackedObject() 
+    public TackableObject TackedObject()
     {
         return _tackedObject;
     }

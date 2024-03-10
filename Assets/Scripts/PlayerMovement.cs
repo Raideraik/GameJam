@@ -10,12 +10,6 @@ public class PlayerMovement : MonoBehaviour
     [SerializeField] private float _moveSpeed;
     [SerializeField] private float _groundDrag;
 
-    [SerializeField] private float _jumpForce;
-    [SerializeField] private float _jumpCooldown;
-    [SerializeField] private float _airMultiplier;
-    private bool _readyToJump = true;
-
-    private KeyCode _jumpKey = KeyCode.Space;
 
     [SerializeField] private Transform _orientation;
 
@@ -32,6 +26,9 @@ public class PlayerMovement : MonoBehaviour
     [SerializeField] private LayerMask _whatIsGround;
     private bool _grounded;
 
+    [SerializeField] private float _timerDown = 0.001f;
+    [SerializeField] private float _timer = 0.1f;
+    [SerializeField] private AudioClip[] _clip;
     public bool CanMove => _canMove;
     private bool _canMove = true;
 
@@ -73,17 +70,6 @@ public class PlayerMovement : MonoBehaviour
     {
         _horizontalInput = Input.GetAxisRaw("Horizontal");
         _verticalInput = Input.GetAxisRaw("Vertical");
-
-        if (Input.GetKey(_jumpKey) && _readyToJump && _grounded)
-        {
-            _readyToJump = false;
-
-            Jump();
-            if (_grounded)
-            {
-                ResetJump();
-            }
-        }
     }
     // онялнрперэ бхдня опн сопюбкемхе б йспяе!!!!
     private void MovePlayer()
@@ -93,9 +79,10 @@ public class PlayerMovement : MonoBehaviour
         float speedMultiplier = 10f;
         if (_grounded)
             _rigidbody.AddForce(_moveDirection.normalized * _moveSpeed * speedMultiplier, ForceMode.Force);
-        else
+
+        if (_moveDirection.normalized.x != 0 || _moveDirection.normalized.z != 0)
         {
-            _rigidbody.AddForce(_moveDirection.normalized * _moveSpeed * speedMultiplier * _airMultiplier, ForceMode.Force);
+            MoveSound();
         }
 
     }
@@ -111,21 +98,23 @@ public class PlayerMovement : MonoBehaviour
         }
     }
 
-    private void Jump()
-    {
-        _rigidbody.velocity = new Vector3(_rigidbody.velocity.x, 0f, _rigidbody.velocity.z);
-
-        _rigidbody.AddForce(transform.up * _jumpForce, ForceMode.Impulse);
-    }
-
-    private void ResetJump()
-    {
-        _readyToJump = true;
-    }
-
-    public void ToggleMovement() 
+    public void ToggleMovement()
     {
         _canMove = !_canMove;
-    } 
+    }
+
+    private void MoveSound()
+    {
+        if (_timerDown > 0)
+        {
+            _timerDown -= Time.deltaTime;
+        }
+
+        if (_timerDown < 0)
+        {
+            SoundsController.Instance.PlaySound(_clip[Random.Range(0, _clip.Length)]);
+            _timerDown = _timer;
+        }
+    }
 }
 

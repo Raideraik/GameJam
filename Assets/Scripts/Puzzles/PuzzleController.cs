@@ -12,10 +12,12 @@ public class PuzzleController : UIActivator
     public void ActivatePuzzle()
     {
         OnPuzzleActivation?.Invoke(this, _id);
+        PauseMenu.Instance.ToggleGame();
+/*
         Cursor.lockState = CursorLockMode.Confined;
         Cursor.visible = true;
         PlayerCam.Instance.ToggleCam();
-        PlayerMovement.Instance.ToggleMovement();
+        PlayerMovement.Instance.ToggleMovement();*/
     }
     public void DeActivatePuzzle()
     {

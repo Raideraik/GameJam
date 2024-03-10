@@ -22,6 +22,7 @@ public class PuzzleUI : MonoBehaviour
             _exitButton[i].onClick.AddListener(() =>
         {
             Hide();
+            PauseMenu.Instance.ToggleGame();
         });        }
 
         Hide();

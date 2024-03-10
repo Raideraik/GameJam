@@ -11,6 +11,8 @@ public class ChessBoard : MonoBehaviour
     [SerializeField] private GameObject[] _piecesToDeactivate;
     [SerializeField] private GameObject _gameObjectToActivate;
 
+    [SerializeField] private AudioClip _audioClip;
+
     private void Start()
     {
         Instance = this;
@@ -18,6 +20,7 @@ public class ChessBoard : MonoBehaviour
 
     public void CheckMate()
     {
+        SoundsController.Instance.PlaySound(_audioClip);
         _isGameEnded = true;
 
         for (int i = 0; i < _piecesToDeactivate.Length; i++)

@@ -9,6 +9,7 @@ public class DoorController : HandheldActivator, IItems
     [SerializeField] private IItems.Items _items;
     private Animator _animator;
 
+    [SerializeField] private AudioClip _clip;
     private void Awake()
     {
         _animator = gameObject.GetComponent<Animator>();
@@ -16,6 +17,7 @@ public class DoorController : HandheldActivator, IItems
 
     private void PlayAnimation()
     {
+        SoundsController.Instance.PlaySound(_clip);
         _animator.SetTrigger("Open");
         for (int i = 0; i < _portals.Length; i++)
         {

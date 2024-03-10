@@ -7,8 +7,8 @@ public class DigitLock : MonoBehaviour
 {
     [SerializeField] private Digit[] _digits;
     [SerializeField] private int[] _correctLock;
-
-     private Animator _animator;
+    [SerializeField] private AudioClip _audioClip;
+    private Animator _animator;
 
     private int[] _correctNumbers = { 0, 0, 0 };
 
@@ -58,6 +58,7 @@ public class DigitLock : MonoBehaviour
 
     private void PlayAnimation()
     {
+        SoundsController.Instance.PlaySound(_audioClip);
         _animator.SetTrigger("Open");
     }
 }

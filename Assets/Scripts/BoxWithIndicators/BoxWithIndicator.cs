@@ -8,6 +8,7 @@ public class BoxWithIndicator : MonoBehaviour
     [SerializeField] private List<Indicator> _indicators;
     [SerializeField] private Material _red;
     [SerializeField] private Material _green;
+    [SerializeField] private AudioClip _clip;
 
     private Animator _animator;
     private int _tempIndex;
@@ -24,6 +25,7 @@ public class BoxWithIndicator : MonoBehaviour
 
     private void BoxWithIndicator_OnAnyIndicatorClick(object sender, Indicator e)
     {
+        SoundsController.Instance.PlaySound(_clip);
         for (int i = 0; i < _indicators.Count; i++)
         {
             if (_indicators[i] == e && i < _indicators.Count)

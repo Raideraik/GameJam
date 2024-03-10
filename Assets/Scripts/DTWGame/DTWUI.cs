@@ -15,6 +15,9 @@ public class DTWUI : MonoBehaviour
     [SerializeField] private int _goalNeedToTouchCount = 3;
     [SerializeField] private Texture2D _newCursour;
 
+    [SerializeField] private AudioClip _wrongClip;
+    [SerializeField] private AudioClip _correctClip;
+
     private int _wallsTouchedCount = 0;
     private int _goalTouchedCount = 0;
 
@@ -30,30 +33,23 @@ public class DTWUI : MonoBehaviour
         Hide();
     }
 
-    private void OnDisable()
-    {
-
-        DTWGoal.OnDTWGoalTouched -= DTWGoal_OnDTWGoalTouched;
-        DTWWall.OnAnyWallTouched -= OnAnyWallTouched;
-    }
-
     private void DTWGoal_OnDTWGoalTouched(object sender, System.EventArgs e)
     {
-        if (_wallsTouchedCount > 0)
-            _wallsTouchedCount--;
 
+        SoundsController.Instance.PlaySound(_correctClip);
         _goalTouchedCount++;
         SelectNewLevel();
         if (_goalTouchedCount >= _goalNeedToTouchCount)
         {
             OnEndReached?.Invoke(this, EventArgs.Empty);
             DeactivateGame();
-           gameObject.SetActive(false);
+            gameObject.SetActive(false);
         }
     }
 
     private void OnAnyWallTouched(object sender, System.EventArgs e)
     {
+        SoundsController.Instance.PlaySound(_wrongClip);
         _wallsTouchedCount++;
         SelectNewLevel();
         if (_wallsTouchedCount >= _wallsProhibitedTouchCount)

@@ -5,6 +5,7 @@ using UnityEngine;
 public class PortalDeactivator : MonoBehaviour
 {
     [SerializeField] private GameObject[] _portals;
+    [SerializeField] private AudioClip _clip;
     private void OnTriggerExit(Collider other)
     {
         if (other.TryGetComponent(out PlayerMovement player))
@@ -15,6 +16,7 @@ public class PortalDeactivator : MonoBehaviour
 
     private void DeactivatePortals()
     {
+        SoundsController.Instance.PlaySound(_clip);
         for (int i = 0; i < _portals.Length; i++)
         {
             _portals[i].SetActive(!_portals[i].activeSelf);

@@ -4,19 +4,20 @@ using UnityEngine;
 
 public class EffectsControll : MonoBehaviour
 {
-    [SerializeField] private Effect[] _effects;
+    [SerializeField] private PostamentActivator[] _postaments;
 
     private int _effectCount;
     private Animator _animator;
     private void Start()
     {
         _animator = GetComponent<Animator>();
-        Effect.OnEffectPlaced += OnEffectPlaced;
+        PostamentActivator.OnEffectPlaced += OnEffectPlaced;
     }
 
     private void OnEffectPlaced(object sender, System.EventArgs e)
     {
-        if (_effectCount >= _effects.Length)
+        _effectCount++;
+        if (_effectCount >= _postaments.Length)
         {
             PlayeAnimation();
         }
